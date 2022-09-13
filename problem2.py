@@ -13,7 +13,7 @@ def one_armed_bandit():
     # Using a while loop to continously run our slot machine
     game_on = True
     while game_on:
-        choice = input(f"You have ${cash}. Would you like to play (y/n)? ")
+        choice = input(f"\nYou have ${cash}. Would you like to play (y/n)? ")
         if choice.lower() == 'y':
             cash += spin_wheel()
         else:
@@ -26,13 +26,10 @@ def one_armed_bandit():
             print("You ran out of money.")
             game_on = False
     
-    print("Thanks for playing.")
-
-    # Start with $50
-    # Use a while loop to take away $1 every round
+    print("Thanks for playing.")g
 
 def spin_wheel():
-    print("Wheel is spinning. . .")
+    print("Wheel is spinning. . .  \n")
 
     wheel_one = spin_choices[random.randint(0,5)]
     wheel_two = spin_choices[random.randint(0,5)]
@@ -40,7 +37,6 @@ def spin_wheel():
     # Should return payoff amount
 
     results = f"{wheel_one} {wheel_two} {wheel_three}"
-    print(results)
 
     if "CHERRY" in results:
         # Use a dictionary to give out the amount of cash depending on the amount of cherries in results
@@ -52,12 +48,27 @@ def spin_wheel():
         cherry_count = results.count('CHERRY')
         print(f"{results} -- You win ${cherry_cash[cherry_count]}")
         return cherry_cash[cherry_count]
+    
+    
+    else:
+        fruit_cash = {
+            "ORANGE":10,
+            "PLUM":14,
+            "BELL":20,
+            "BAR":250,
+        }
+        # Check for other possibilities
+        for fruit in spin_choices:
+            if results.count(fruit) == 3 or results.count(fruit) == 2 and "BAR" in results:
+                print(f"{results} -- You win ${fruit_cash[fruit]}")
+                return fruit_cash[fruit]
         
+        # If function reaches this point, no combination was found.
+        print(f"{results} -- You lose")
+
+
 
     return 0
-
-    
-
 
 spin_choices = ['CHERRY', 'LEMON', 'ORANGE', 'PLUM', 'BELL', 'BAR']
   
